@@ -1,0 +1,56 @@
+{% extends 'personal_portfolio_app/base.html' %}
+
+{% block title %}Contact{% endblock %}
+
+{% block content %}
+
+<section class="contact-section">
+
+    <div class="contact-card">
+
+        <h1>Contact Me</h1>
+
+        <p class="contact-text">
+            Have a question, project idea, or would like to work together?<br>
+            Feel free to send me a message using the form below.
+        </p>
+
+        {% if success %}
+        <div class="success-message">
+            Your message has been sent successfully!
+        </div>
+        {% endif %}
+
+        {% if error %}
+        <div class="error-message">
+            Please fill in all required fields.
+        </div>
+        {% endif %}
+
+        <form method="POST" class="contact-form">
+
+            {% csrf_token %}
+
+            <label for="name">Name</label>
+            <input type="text" id="name" name="name" required>
+
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="subject">Subject</label>
+            <input type="text" id="subject" name="subject" required>
+
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="6" required></textarea>
+
+            <button type="submit" class="btn">
+                Send Message
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}

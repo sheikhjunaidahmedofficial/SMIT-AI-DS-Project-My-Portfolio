@@ -1,0 +1,37 @@
+{% extends 'personal_portfolio_app/base.html' %}
+
+{% block title %}Projects{% endblock %}
+
+{% block content %}
+
+<h1 class="section-title">My Projects</h1>
+
+<div class="project-card-grid">
+
+{% for project in projects %}
+
+<div class="project-card">
+
+    <img src="{{ project.image.url }}" alt="{{ project.title }}">
+
+    <h2>{{ project.title }}</h2>
+
+    <p>{{ project.description|linebreaksbr }}</p>
+
+    <p><strong>Technology:</strong> {{ project.technology }}</p>
+
+    <a href="{{ project.project_link }}" class="btn">
+        View Project
+    </a>
+
+</div>
+
+{% empty %}
+
+<p>No Projects Added.</p>
+
+{% endfor %}
+
+</div>
+
+{% endblock %}

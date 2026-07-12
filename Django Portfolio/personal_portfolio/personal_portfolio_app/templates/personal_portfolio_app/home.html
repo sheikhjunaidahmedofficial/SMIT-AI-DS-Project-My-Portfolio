@@ -1,0 +1,195 @@
+{% extends 'personal_portfolio_app/base.html' %}
+
+{% block title %}
+Home
+{% endblock %}
+
+{% block content %}
+
+<section class="hero">
+
+    <div class="hero-card">
+
+        {% if profile.profile_image %}
+            <img src="{{ profile.profile_image.url }}" alt="{{ profile.name }}">
+        {% else %}
+            <img src="https://via.placeholder.com/180" alt="Profile">
+        {% endif %}
+
+        <div>
+
+            <h1>{{ profile.name }}</h1>
+
+            <h3>{{ profile.profession }}</h3>
+
+            <p>{{ profile.intro|linebreaksbr }}</p>
+
+            <div class="hero-buttons">
+                <a href="/projects" class="btn">View Projects</a>
+                <a href="/contact" class="btn btn-outline">Contact Me</a>
+
+                {% if profile.cv %}
+                <a href="{{ profile.cv.url }}" download="CV_Shaikh_Junaid_Ahmed.pdf" class="btn">
+                    Download CV
+                </a>
+                {% endif %}
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<!-- About -->
+
+<h2 class="section-title">About Me</h2>
+
+<div class="card">
+
+    {% if about %}
+        <p>{{ about.description|linebreaksbr }}</p>
+    {% else %}
+        <p>No About information added.</p>
+    {% endif %}
+
+</div>
+
+
+<!-- Education -->
+
+<h2 class="section-title">Education</h2>
+
+<div class="education-card-grid">
+
+    {% for education in educations %}
+
+    <div class="card">
+
+        <h3>{{ education.degree }}</h3>
+
+        <p>
+            <strong>Institute:</strong>
+            {{ education.institute }}
+        </p>
+
+        <p>
+            <strong>Duration:</strong>
+            {{ education.start_year }} - {{ education.end_year }}
+        </p>
+
+        {% if education.education_type == "university" %}
+
+            <p>
+                <strong>CGPA:</strong>
+                {{ education.cgpa }}/{{ education.cgpa_scale }}
+            </p>
+
+            {% if education.show_grade and education.grade %}
+            <p>
+                <strong>Grade:</strong>
+                {{ education.grade }}
+            </p>
+            {% endif %}
+
+        {% else %}
+
+            {% if education.show_grade and education.grade %}
+            <p>
+                <strong>Grade:</strong>
+                {{ education.grade }}
+            </p>
+            {% endif %}
+
+            {% if education.show_marks %}
+            <p>
+                <strong>Marks:</strong>
+                {{ education.obtained_marks }}/{{ education.total_marks }}
+            </p>
+            {% endif %}
+
+        {% endif %}
+
+        {% if education.percentage %}
+
+        <div class="cgpa-top">
+            <span>{{ education.percentage }}%</span>
+        </div>
+
+        <div class="cgpa-bar">
+            <div class="cgpa-progress" style="width:{{ education.percentage }}%;"></div>
+        </div>
+
+        {% endif %}
+
+        {% if education.description %}
+            <p>{{ education.description|linebreaksbr }}</p>
+        {% endif %}
+
+    </div>
+
+    {% empty %}
+
+    <p>No Education Added.</p>
+
+    {% endfor %}
+
+</div>
+
+
+<!-- Skills -->
+
+<h2 class="section-title">My Skills</h2>
+
+<div class="card-grid">
+
+    {% for skill in skills %}
+
+    <div class="card skill-card">
+
+        {% if skill.icon %}
+            <img src="{{ skill.icon.url }}"
+                 alt="{{ skill.name }}"
+                 class="skill-icon">
+        {% endif %}
+
+        <h3>{{ skill.name }}</h3>
+
+        <div class="skill-header">
+            <span>Proficiency</span>
+            <span>{{ skill.level }}%</span>
+        </div>
+
+        <div class="skill-bar">
+            <div class="skill-progress"
+                 style="width: {{ skill.level }}%;">
+            </div>
+        </div>
+
+    </div>
+
+    {% empty %}
+
+        <p>No Skills Added.</p>
+
+    {% endfor %}
+
+</div>
+
+
+<!-- Career Goal -->
+
+<h2 class="section-title">Career Goal</h2>
+
+<div class="card">
+
+    {% if career_goal %}
+        <p>{{ career_goal.description|linebreaksbr }}</p>
+    {% else %}
+        <p>No Career Goal Added.</p>
+    {% endif %}
+
+</div>
+
+{% endblock %}
